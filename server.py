@@ -1,11 +1,12 @@
 import logging
+import os
 import sys
 from abc import abstractmethod
 from typing import Optional, Awaitable
 
+import tornado.escape
 import tornado.ioloop
 import tornado.web
-import tornado.escape
 
 from sso import KerberosAuthMixin
 
@@ -44,6 +45,9 @@ if __name__ == "__main__":
         (r"/auth", KerberosAuthHandler)
     ]
     settings = {
+        "cookie_secret": "iYR123qg4UUdsgf4CRung6BFUBhizAciid8oq1YfJR3gN",
+        "static_path": os.path.join(os.path.dirname(__file__), "static"),
+        "gzip": True,
         "login_url": "/auth",
         "debug": True,
         "realm": "gpnhpetest.gpndt.test",

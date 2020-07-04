@@ -124,7 +124,7 @@ class KerberosAuthMixin(tornado.web.RequestHandler):
                 self.auth_basic(auth_header, callback)
             # NOTE: The user we get from Negotiate is a full UPN (user@REALM)
             user = kerberos.authGSSServerUserName(context)
-        except kerberos.GSSError as e:
+        except (kerberos.GSSError, pywintypes_error) as e:
             logging.error(f"Kerberos Error: {e}")
             raise tornado.web.HTTPError(500, "Kerberos Init failed")
         finally:
